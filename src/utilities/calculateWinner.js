@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 export function calculateWinner(squares) {
 	const lines = [
 		[0, 1, 2],
@@ -10,6 +9,7 @@ export function calculateWinner(squares) {
 		[1, 4, 7],
 		[2, 5, 8],
 	];
+
 	for (let i = 0; i < lines.length; i++) {
 		const [a, b, c] = lines[i];
 		if (
@@ -17,16 +17,12 @@ export function calculateWinner(squares) {
 			squares[a] === squares[b] &&
 			squares[a] === squares[c]
 		) {
-			return squares[a];
+			return { winner: squares[a], line: lines[i] };
 		}
 	}
 
 	if (squares.every((square) => square !== null)) {
-		return 'Ничья';
+		return { winner: 'Ничья', line: [] };
 	}
-	return null;
+	return { winner: null, line: [] };
 }
-
-calculateWinner.prototype = {
-	squares: PropTypes.arrayOf(PropTypes.string).isRequired,
-};

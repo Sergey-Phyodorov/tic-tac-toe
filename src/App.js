@@ -1,9 +1,9 @@
-import { BoardContainer } from './components/board/Board';
+import { GameBoard } from './components/GameBoard/GameBoard';
 
 function App() {
 	return (
 		<div className="App">
-			<BoardContainer />
+			<GameBoard />
 		</div>
 	);
 }

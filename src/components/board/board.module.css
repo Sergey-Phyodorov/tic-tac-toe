@@ -1,7 +1,0 @@
-.boardRow {
-	display: flex;
-	flex-wrap: wrap;
-	max-width: 102px;
-	padding-bottom: 20px;
-	padding-top: 20px;
-}

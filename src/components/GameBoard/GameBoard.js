@@ -1,56 +1,31 @@
 import './game-board.css';
 
-import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectBoard } from '../../redux/selectors';
+import { RESET_GAME } from '../../redux/actions';
 
 import { GameCell } from '../GameCell/GameCell';
 import { GameStatus } from '../GameStatus/GameStatus';
 import { Button } from '../../ui/Button/Button';
 
-import { store } from '../../redux/store';
-
 export const GameBoard = () => {
-	const [state, setState] = useState(store.getState());
-
-	useEffect(() => {
-		const unsubscribe = store.subscribe(() => {
-			setState(store.getState());
-		});
-
-		return () => {
-			unsubscribe();
-		};
-	}, []);
-
-	const handleCellClick = (index) => {
-		const currentState = store.getState();
-
-		if (currentState.winner || currentState.board[index]) {
-			return;
-		}
-
-		store.dispatch({ type: 'MAKE_MOVE', index });
-	};
+	const dispatch = useDispatch();
+	const gameBoard = useSelector(selectBoard);
 
 	const handleResetGame = () => {
-		store.dispatch({ type: 'RESET_GAME' });
+		dispatch(RESET_GAME);
 	};
 
 	return (
 		<>
-			<GameStatus
-				winner={state.winner}
-				currentPlayer={state.currentPlayer}
-			/>
+			<GameStatus />
+
 			<div className={'game-board-cell'}>
-				{state.board.map((cell, index) => (
-					<GameCell
-						key={index}
-						value={cell}
-						onClick={() => handleCellClick(index)}
-						highlight={state.winningLine.includes(index)}
-					/>
+				{gameBoard.map((cell, index) => (
+					<GameCell key={index} indexCell={index} value={cell} />
 				))}
 			</div>
+
 			<Button onClick={handleResetGame}>Начать игру</Button>
 		</>
 	);

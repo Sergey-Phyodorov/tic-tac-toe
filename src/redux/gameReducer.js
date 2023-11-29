@@ -22,6 +22,7 @@ export const gameReducer = (state = initialState, action) => {
 			});
 
 			const { winner, line } = calculateWinner(newBoard);
+
 			return {
 				...state,
 				board: newBoard,
